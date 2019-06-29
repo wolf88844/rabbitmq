@@ -10,7 +10,7 @@
     <!--spring-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext*.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
     <!--springMVC-->
     <context-param>
@@ -45,7 +45,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring-mvc</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
 

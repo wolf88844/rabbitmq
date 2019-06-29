@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.HashMap;
 
 @Controller
+@RequestMapping("/rabbit/")
 public class RabbitController {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @RequestMapping(value = "rabbit",method = RequestMethod.GET)
+    @RequestMapping(value = "send",method = RequestMethod.GET)
     public void  rabbit(){
         HashMap<String,String> map = new HashMap<>();
         map.put("id","1");
