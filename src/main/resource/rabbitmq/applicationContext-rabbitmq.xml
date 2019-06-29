@@ -21,15 +21,17 @@
                                port="${rabbitmq.port}"
                                username="${rabbitmq.username}"
                                password="${rabbitmq.password}"
-                               virtual-host="${rabbitmq.vhost}"/>
+                               virtual-host="${rabbitmq.vhost}"
+                                channel-cache-size="${rabbitmq.channel-cache-size}"/>
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
+
     <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"/>
 
-    <rabbit:queue name="queue" durable="false" auto-delete="true" exclusive="false"/>
+    <rabbit:queue name="queue" durable="true" auto-delete="false" exclusive="false"/>
 
-    <rabbit:direct-exchange name="dirExchange" id="directExchange">
+    <rabbit:direct-exchange name="directExchange" id="directExchange">
         <rabbit:bindings>
             <rabbit:binding queue="queue" key="queuekey"/>
         </rabbit:bindings>
@@ -40,5 +42,10 @@
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
         <rabbit:listener ref="queueHandler" queues="queue"/>
     </rabbit:listener-container>
+
+    <bean id="simpleMessageListenerContainer" class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
+        <property name="acknowledgeMode" value="MANUAL"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
 
 </beans>
