@@ -1,6 +1,8 @@
 package com.springmvc.rabbitmq.controller;
 
 import com.springmvc.rabbitmq.service.PublishService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,12 +10,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+
+@Slf4j
 @Controller
 @RequestMapping("/rabbit/")
 public class RabbitController {
 
+    @Value("${rabbitmq.test.exchange}")
+    private String exchange;
+
+    @Value("${rabbitmq.test.queue}")
+    private String queue;
+
+    @Value("${rabbitmq.test.key}")
+    private String key;
+
+
     @Resource
     private PublishService publishService;
+
+
+    @RequestMapping(value = "testconfig",method = RequestMethod.GET)
+    @ResponseBody
+    public void testconfig() throws InterruptedException {
+        String message = "currentTime:"+System.currentTimeMillis();
+        System.out.println("testconfig---message:"+message);
+        publishService.send(exchange,key,message);
+        Thread.sleep(1000);
+    }
+
 
 
     private static String exChange = "directExchange";

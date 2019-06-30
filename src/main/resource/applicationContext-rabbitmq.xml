@@ -13,49 +13,49 @@
 
     <description>rabbitmq配置</description>
 
-    <context:property-placeholder location="classpath:rabbitmq.properties" ignore-unresolvable="true"/>
+    <!--<context:property-placeholder location="classpath:rabbitmq.properties" ignore-unresolvable="true"/>-->
 
 
-    <rabbit:connection-factory id="connectionFactory"
-                               host="${rabbitmq.host}"
-                               port="${rabbitmq.port}"
-                               username="${rabbitmq.username}"
-                               password="${rabbitmq.password}"
-                               virtual-host="${rabbitmq.vhost}"
-                               channel-cache-size="${rabbitmq.channel-cache-size}"
-                               publisher-confirms="true"/>
+    <!--<rabbit:connection-factory id="connectionFactory"-->
+                               <!--host="${rabbitmq.host}"-->
+                               <!--port="${rabbitmq.port}"-->
+                               <!--username="${rabbitmq.username}"-->
+                               <!--password="${rabbitmq.password}"-->
+                               <!--virtual-host="${rabbitmq.vhost}"-->
+                               <!--channel-cache-size="${rabbitmq.channel-cache-size}"-->
+                               <!--publisher-confirms="true"/>-->
 
-    <rabbit:admin connection-factory="connectionFactory"/>
+    <!--<rabbit:admin connection-factory="connectionFactory"/>-->
 
-    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
+    <!--<bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>-->
 
-    <bean id="returnCallBackListener" class="com.springmvc.rabbitmq.service.ReturnCallBackListener"/>
-    <bean id="confirmCallBackListener" class="com.springmvc.rabbitmq.service.ConfirmCallBackListener"/>
+    <!--<bean id="returnCallBackListener" class="com.springmvc.rabbitmq.service.ReturnCallBackListener"/>-->
+    <!--<bean id="confirmCallBackListener" class="com.springmvc.rabbitmq.service.ConfirmCallBackListener"/>-->
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
-                     confirm-callback="confirmCallBackListener"
-                     return-callback="returnCallBackListener"
-                     mandatory="true"
-    />
+    <!--<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"-->
+                     <!--confirm-callback="confirmCallBackListener"-->
+                     <!--return-callback="returnCallBackListener"-->
+                     <!--mandatory="true"-->
+    <!--/>-->
 
-    <rabbit:queue name="queue"/>
+    <!--<rabbit:queue name="queue"/>-->
 
-    <rabbit:direct-exchange name="directExchange" id="directExchange">
-        <rabbit:bindings>
-            <rabbit:binding queue="queue" key="CONFIRM_TEST"/>
-        </rabbit:bindings>
-    </rabbit:direct-exchange>
+    <!--<rabbit:direct-exchange name="directExchange" id="directExchange">-->
+        <!--<rabbit:bindings>-->
+            <!--<rabbit:binding queue="queue" key="CONFIRM_TEST"/>-->
+        <!--</rabbit:bindings>-->
+    <!--</rabbit:direct-exchange>-->
 
-    <bean id="recvHandler" class="com.springmvc.rabbitmq.RecvHandler"/>
+    <!--<bean id="recvHandler" class="com.springmvc.rabbitmq.RecvHandler"/>-->
 
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
-        <rabbit:listener ref="recvHandler" queues="queue"/>
-    </rabbit:listener-container>
+    <!--<rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">-->
+        <!--<rabbit:listener ref="recvHandler" queues="queue"/>-->
+    <!--</rabbit:listener-container>-->
 
-    <bean id="simpleMessageListenerContainer" class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="acknowledgeMode" value="MANUAL"/>
-    </bean>
+    <!--<bean id="simpleMessageListenerContainer" class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">-->
+        <!--<property name="connectionFactory" ref="connectionFactory"/>-->
+        <!--<property name="acknowledgeMode" value="MANUAL"/>-->
+    <!--</bean>-->
 
 
 </beans>
