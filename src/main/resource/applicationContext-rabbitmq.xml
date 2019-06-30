@@ -52,5 +52,10 @@
         <rabbit:listener ref="recvHandler" queues="queue"/>
     </rabbit:listener-container>
 
+    <bean id="simpleMessageListenerContainer" class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="acknowledgeMode" value="MANUAL"/>
+    </bean>
+
 
 </beans>
